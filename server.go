@@ -15,14 +15,10 @@ var id = 0
 type Accounties []account.AccStr
 
 func getAccHandler(c *gin.Context) {
-	//c.JSON(http.StatusOK, gin.H{"myid": "id"})
+	var accounties Accounties
 	var tid int
 	status := c.Query("status")
 	fmt.Println("status", status)
-	//tempAcc := []*account.AccStr{}
-	//ac := new(account.AccStr)
-	//c.JSON(http.StatusOK, acc)
-	var accounties Accounties
 
 	if status != "" {
 
@@ -32,7 +28,7 @@ func getAccHandler(c *gin.Context) {
 			newid := strconv.Itoa(tid)
 
 			if acc[newid].AccStatus == status {
-				//c.JSON(http.StatusOK, acc[newid].AccStatus)
+
 				accounties = append(accounties, account.AccStr{
 					AccID:     acc[newid].AccID,
 					AccName:   acc[newid].AccName,
@@ -54,7 +50,7 @@ func getAccByIdHandler(c *gin.Context) {
 	id := c.Param("id")
 
 	if acc[id] != nil {
-		//		c.JSON(http.StatusOK, acc[id].AccName)
+
 		c.JSON(http.StatusOK, acc[id])
 		return
 	}
@@ -63,7 +59,7 @@ func getAccByIdHandler(c *gin.Context) {
 }
 
 func createAccHandler(c *gin.Context) {
-	//var item account.AccStr
+
 	var item account.AccStr
 	err := c.ShouldBindJSON(&item)
 	if err != nil {
@@ -71,7 +67,7 @@ func createAccHandler(c *gin.Context) {
 	}
 	id++
 	item.AccID = strconv.Itoa(id)
-	//item.AccStatus = "Active"
+
 	acc[item.AccID] = &item
 	c.String(http.StatusOK, "Create Account Name :  "+item.AccName+"  Completed")
 
